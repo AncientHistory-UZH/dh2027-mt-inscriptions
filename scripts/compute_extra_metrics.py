@@ -103,7 +103,7 @@ def main():
     ]
 
     results = []
-    active_models = [m for m in MODELS if m in translations]
+    active_models = sorted(translations.keys())
     total_combos = len(active_models) * 3 * len(tiers)  # models × langs × tiers
     done = 0
 
