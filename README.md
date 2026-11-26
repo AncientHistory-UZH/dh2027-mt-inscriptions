@@ -9,7 +9,7 @@ reference translations in German, English and French.
 mt-experiment/
 ├── data/
 │   └── testset/
-│       ├── filtered-testset.csv              # 307 Latin inscriptions from EDCS
+│       ├── filtered-testset.csv              # 305 Latin inscriptions from EDCS
 │       ├── human-translations-testset.csv    # 915 human + Gemini reference translations (DE/EN/FR)
 │       └── results/
 │           ├── _translation_cache.json       # all LLM translations (12 models × 305 inscriptions × 3 langs)
@@ -106,7 +106,7 @@ python evaluate_testset.py
 ## Inscription texts
 
 Inscription texts are from the EDCS (Epigraphic Database Clauss-Slaby,
-http://www.manfreclausss.de). `filtered-testset.csv` contains the Latin source
+https://edcs.hist.uzh.ch). `filtered-testset.csv` contains the Latin source
 texts with EDCS identifiers.
 
 ## License
