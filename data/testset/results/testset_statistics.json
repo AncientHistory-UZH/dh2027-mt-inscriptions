@@ -1,0 +1,85 @@
+{
+  "total_reference_pairs": 915,
+  "unique_inscriptions": 305,
+  "languages": [
+    "DE",
+    "EN",
+    "FR"
+  ],
+  "num_languages": 3,
+  "per_language": {
+    "DE": {
+      "language_name": "German",
+      "num_inscriptions": 305,
+      "unique_edcs_ids": 305,
+      "reference_word_count": {
+        "total": 10188,
+        "mean": 33.4,
+        "median": 29.0,
+        "min": 3,
+        "max": 252,
+        "std": 24.2
+      },
+      "latin_source_word_count": {
+        "total": 8189,
+        "mean": 26.8,
+        "median": 24.0,
+        "min": 3,
+        "max": 157,
+        "std": 16.8
+      }
+    },
+    "EN": {
+      "language_name": "English",
+      "num_inscriptions": 305,
+      "unique_edcs_ids": 305,
+      "reference_word_count": {
+        "total": 11154,
+        "mean": 36.6,
+        "median": 31.0,
+        "min": 4,
+        "max": 266,
+        "std": 25.8
+      },
+      "latin_source_word_count": {
+        "total": 8189,
+        "mean": 26.8,
+        "median": 24.0,
+        "min": 3,
+        "max": 157,
+        "std": 16.8
+      }
+    },
+    "FR": {
+      "language_name": "French",
+      "num_inscriptions": 305,
+      "unique_edcs_ids": 305,
+      "reference_word_count": {
+        "total": 11240,
+        "mean": 36.9,
+        "median": 32.0,
+        "min": 3,
+        "max": 263,
+        "std": 26.5
+      },
+      "latin_source_word_count": {
+        "total": 8189,
+        "mean": 26.8,
+        "median": 24.0,
+        "min": 3,
+        "max": 157,
+        "std": 16.8
+      }
+    }
+  },
+  "latin_source_overall": {
+    "unique_texts": 305,
+    "total_words": 8189,
+    "mean_words": 26.8,
+    "median_words": 24.0,
+    "min_words": 3,
+    "max_words": 157,
+    "std_words": 16.8
+  },
+  "generated_at": "2026-11-18T14:32:03.802788"
+}
