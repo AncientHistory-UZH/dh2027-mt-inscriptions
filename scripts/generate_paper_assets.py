@@ -336,7 +336,7 @@ def table_models():
         ("Gemini 3.5 Flash",  "Google",     "gemini-3.5-flash",                   "google2026gemini35flash",      "n.d.",   "MoE",   "Proprietary"),
         ("GPT-5",             "OpenAI",     "gpt-5",                              "openai2025gpt5",               "n.d.",   "MoE",   "Proprietary"),
         ("GPT-5 Nano",        "OpenAI",     "gpt-5-nano-2025-08-07",              "openai2025gpt5",               "n.d.",   "MoE",   "Proprietary"),
-        ("DeepSeek V3",       "DeepSeek",   "deepseek-ai/DeepSeek-V3-0324",       "deepseekai2024deepseekv3",     "671B",   "MoE",   "Open-weight"),
+        ("DeepSeek V3",       "DeepSeek",   "deepseek-ai/DeepSeek-V3-0324",       "deepseekai2024deepseekv3",     "671B$^{*}$", "MoE",   "Open-weight"),
         ("Llama 3.1 70B",     "Meta",       "meta-llama/Llama-3.1-70B-Instruct",  "meta2024llama3",               "70B",    "Dense", "Open-weight"),
         ("Llama 3.1 8B",      "Meta",       "meta-llama/Llama-3.1-8B-Instruct",   "meta2024llama3",               "8B",     "Dense", "Open-weight"),
         ("Qwen 2.5 72B",      "Alibaba",    "Qwen/Qwen2.5-72B-Instruct",         "qwen2024qwen25",               "72B",    "Dense", "Open-weight"),
@@ -366,6 +366,7 @@ def table_models():
         ident_tex = ident.replace("/", "/\\allowbreak ")
         lines.append(f"{name} \\cite{{{cite}}} & {provider} & {size} & {arch} & {access} & \\texttt{{{ident_tex}}} \\\\")
     lines.append(r"\bottomrule")
+    lines.append(r"\multicolumn{6}{l}{\scriptsize $^{*}$671B total, 37B active parameters (mixture-of-experts)} \\")
     lines.append(r"\end{tabular}")
     lines.append(r"\end{table*}")
     return "\n".join(lines)
