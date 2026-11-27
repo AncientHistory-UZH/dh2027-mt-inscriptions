@@ -2,14 +2,8 @@
 Testset Evaluation Pipeline
 ============================
 Translates all inscriptions from the human-annotated testset into target
-languages using twelve LLM models (see ``translate.py`` for the full list),
-then computes translation quality metrics (BLEU, chrF, BERTScore) against
-the human reference translations.
-
-The pipeline uses a JSON translation cache: when a model's translations
-already exist in the cache they are reused, so only missing models trigger
-API calls.  This is how the twelve models were added incrementally — by
-updating the ``MODELS`` list in ``translate.py`` and re-running this script.
+languages using three LLM models, then computes translation quality metrics
+(BLEU, chrF, BERTScore) against the human reference translations.
 
 Workflow
 --------
@@ -18,7 +12,7 @@ Workflow
 2. Load original Latin texts from ``data/testset/filtered-testset.csv``
    (column ``edcs_id`` carries the ``EDCS-`` prefix; strip it to match).
 3. For each inscription × target language, call each LLM model to translate
-   the Latin into the target language (cached results are skipped).
+   the Latin into the target language.
 4. Compare machine translation against the human reference using BLEU, chrF
    and BERTScore.
 5. Persist per-inscription scores + aggregate statistics as JSON / CSV.
@@ -51,10 +45,9 @@ from translate import translate_single_lang, MODELS
 def _check_api_keys():
     """Verify that all required API keys are set before starting."""
     required = {
-        "GEMINI_API_KEY": "Gemini models",
-        "ANTHROPIC_API_KEY": "Claude/Sonnet models",
-        "OPENAI_API_KEY": "GPT models",
-        "DEEPINFRA_API_KEY": "open-source models via DeepInfra (DeepSeek, Llama, Qwen, Apertus)",
+        "GEMINI_API_KEY": "gemini",
+        "ANTHROPIC_API_KEY": "claude/sonnet",
+        "OPENAI_API_KEY": "gpt",
     }
     missing = []
     for env_var, provider in required.items():
@@ -414,7 +407,7 @@ def compute_metrics(merged_df, translations):
             if HAS_BERTSCORE:
                 bert_lang = LANG_MAP_BERT.get(lang, "en")
                 P, R, F1 = bert_score_fn(
-                    hypotheses, references, lang=bert_lang, verbose=False
+                    hypotheses, references, model_type="xlm-roberta-large", verbose=False
                 )
                 agg["bertscore_precision"] = round(P.mean().item(), 4)
                 agg["bertscore_recall"] = round(R.mean().item(), 4)
