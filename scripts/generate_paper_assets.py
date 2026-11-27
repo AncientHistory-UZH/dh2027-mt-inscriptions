@@ -328,41 +328,43 @@ def table_categories():
 
 
 def table_models():
+    # (name, provider, api_id, cite_key, size, arch, access)
+    model_info = [
+        ("Claude Sonnet 5",   "Anthropic",  "claude-sonnet-5",                    "anthropic2026claudesonnet5",    "n.d.",   "MoE",   "Proprietary"),
+        ("Claude Sonnet 4",   "Anthropic",  "claude-sonnet-4-6",                  "anthropic2025claude4",         "n.d.",   "MoE",   "Proprietary"),
+        ("Gemini 2.5 Flash",  "Google",     "gemini-2.5-flash",                   "geminiteam2025gemini25",       "n.d.",   "MoE",   "Proprietary"),
+        ("Gemini 3.5 Flash",  "Google",     "gemini-3.5-flash",                   "google2026gemini35flash",      "n.d.",   "MoE",   "Proprietary"),
+        ("GPT-5",             "OpenAI",     "gpt-5",                              "openai2025gpt5",               "n.d.",   "MoE",   "Proprietary"),
+        ("GPT-5 Nano",        "OpenAI",     "gpt-5-nano-2025-08-07",              "openai2025gpt5",               "n.d.",   "MoE",   "Proprietary"),
+        ("DeepSeek V3",       "DeepSeek",   "deepseek-ai/DeepSeek-V3-0324",       "deepseekai2024deepseekv3",     "671B",   "MoE",   "Open-weight"),
+        ("Llama 3.1 70B",     "Meta",       "meta-llama/Llama-3.1-70B-Instruct",  "meta2024llama3",               "70B",    "Dense", "Open-weight"),
+        ("Llama 3.1 8B",      "Meta",       "meta-llama/Llama-3.1-8B-Instruct",   "meta2024llama3",               "8B",     "Dense", "Open-weight"),
+        ("Qwen 2.5 72B",      "Alibaba",    "Qwen/Qwen2.5-72B-Instruct",         "qwen2024qwen25",               "72B",    "Dense", "Open-weight"),
+        ("Apertus 70B",       "Swiss AI",   "swiss-ai/Apertus-70B-Instruct-2509", "projectapertus2025apertus",    "70B",    "Dense", "Open-weight"),
+        ("Apertus 8B",        "Swiss AI",   "swiss-ai/Apertus-8B-Instruct-2509",  "projectapertus2025apertus",    "8B",     "Dense", "Open-weight"),
+    ]
+    comm_models = model_info[:6]
+    oss_models = model_info[6:]
+
     lines = []
     lines.append(r"% Auto-generated – do not edit")
     lines.append(r"\begin{table*}[t]")
     lines.append(r"\centering")
-    lines.append(r"\caption{LLMs evaluated in this study. Proprietary models were accessed via their respective APIs; open-source models via the HuggingFace Serverless Inference API.}")
+    lines.append(r"\caption{LLMs evaluated in this study. Proprietary models were accessed via their"
+                 r" respective APIs; open-weight models via DeepInfra or HuggingFace Serverless Inference."
+                 r" ``n.d.'' = not disclosed.}")
     lines.append(r"\label{tab:models}")
     lines.append(r"\small")
-    lines.append(r"\begin{tabular}{lll}")
+    lines.append(r"\begin{tabular}{llrlll}")
     lines.append(r"\toprule")
-    lines.append(r"\textbf{Model} & \textbf{Provider} & \textbf{API / HF Identifier} \\")
+    lines.append(r"\textbf{Model} & \textbf{Provider} & \textbf{Size} & \textbf{Type} & \textbf{Access} & \textbf{API / HF Identifier} \\")
     lines.append(r"\midrule")
-    model_info = [
-        ("Claude Sonnet 5",   "Anthropic",  "claude-sonnet-5",                       "anthropic2026claudesonnet5"),
-        ("Claude Sonnet 4",   "Anthropic",  "claude-sonnet-4-6",                     "anthropic2025claude4"),
-        ("Gemini 2.5 Flash",  "Google",     "gemini-2.5-flash",                      "geminiteam2025gemini25"),
-        ("Gemini 3.5 Flash",  "Google",     "gemini-3.5-flash",                      "google2026gemini35flash"),
-        ("GPT-5",             "OpenAI",     "gpt-5",                                 "openai2025gpt5"),
-        ("GPT-5 Nano",        "OpenAI",     "gpt-5-nano-2025-08-07",                 "openai2025gpt5"),
-        ("DeepSeek V3",       "DeepSeek",   "deepseek-ai/DeepSeek-V3-0324",          "deepseekai2024deepseekv3"),
-        ("Llama 3.1 70B",     "Meta",       "meta-llama/Llama-3.1-70B-Instruct",     "meta2024llama3"),
-        ("Llama 3.1 8B",      "Meta",       "meta-llama/Llama-3.1-8B-Instruct",      "meta2024llama3"),
-        ("Qwen 2.5 72B",      "Alibaba",    "Qwen/Qwen2.5-72B-Instruct",            "qwen2024qwen25"),
-        ("Apertus 70B",       "Swiss AI",   "swiss-ai/Apertus-70B-Instruct-2509",    "projectapertus2025apertus"),
-        ("Apertus 8B",        "Swiss AI",   "swiss-ai/Apertus-8B-Instruct-2509",     "projectapertus2025apertus"),
-    ]
-    prev_type = None
-    comm_models = model_info[:6]
-    oss_models = model_info[6:]
-    for name, provider, ident, cite in comm_models:
-        lines.append(f"{name} \\cite{{{cite}}} & {provider} & \\texttt{{{ident}}} \\\\")
+    for name, provider, ident, cite, size, arch, access in comm_models:
+        lines.append(f"{name} \\cite{{{cite}}} & {provider} & {size} & {arch} & {access} & \\texttt{{{ident}}} \\\\")
     lines.append(r"\midrule")
-    for name, provider, ident, cite in oss_models:
-        # Escape slashes in HF IDs for better line breaking
+    for name, provider, ident, cite, size, arch, access in oss_models:
         ident_tex = ident.replace("/", "/\\allowbreak ")
-        lines.append(f"{name} \\cite{{{cite}}} & {provider} & \\texttt{{{ident_tex}}} \\\\")
+        lines.append(f"{name} \\cite{{{cite}}} & {provider} & {size} & {arch} & {access} & \\texttt{{{ident_tex}}} \\\\")
     lines.append(r"\bottomrule")
     lines.append(r"\end{tabular}")
     lines.append(r"\end{table*}")
